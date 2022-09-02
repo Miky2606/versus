@@ -23,7 +23,7 @@ return(
         <li className="nav-item">
        <a href="" className="nav-link">Sign In</a> 
         </li>
-        <hr />
+      
         <li className="nav-item">
        <a href="" className="nav-link">Login</a>
         </li>

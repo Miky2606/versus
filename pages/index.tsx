@@ -8,7 +8,7 @@ const Home: NextPage = () => {
     <>
      <div className='container text-center' style={{marginTop:'20px'}}>
       
-      <h1>Vs </h1>
+      <h1>Vs</h1>
       <hr style={{borderColor:'gray',  borderWidth:'2px', width:'30%', marginLeft:'35%'}} />
         
       <Cards />

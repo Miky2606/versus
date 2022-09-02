@@ -6,6 +6,7 @@
     transform: translate(-50%, -50%);
   }
    
+
   
   a{
     text-decoration-line: none;
@@ -28,6 +29,11 @@
 
   }
  
+  .loading{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+  }
  
   .pageOption {
     height: 30vh;

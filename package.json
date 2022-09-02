@@ -9,9 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
     "bootstrap": "^5.2.0",
     "bootswatch": "^5.2.0",
+    "cookies-next": "^2.1.1",
     "include-media": "^1.4.10",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.4",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -19,7 +24,9 @@
     "sass": "^1.54.7"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/bootstrap": "^5.2.3",
+    "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "18.7.13",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
