@@ -30,7 +30,7 @@ const {API_URL} = process.env
     os: window.navigator.platform
    }
 
-     axios.post<ResponseApi>( API_URL+'/hello', user).then((response)=>{
+     axios.post<ResponseApi>( API_URL+'/hello', userData).then((response)=>{
         
       setLoading(true)
 

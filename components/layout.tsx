@@ -1,27 +1,32 @@
 import NavBar from "./navbar";
-import { getCookie } from "cookies-next";
-import { ReactNode, FunctionComponent, useEffect } from "react";
+import { ReactNode, FunctionComponent } from "react";
+import { AppContext } from "next/app";
 
 
 
 interface BaseLayoutProps {
   children?: ReactNode,
-  token:string
+  token:any
 }
 
+
 const Layout: FunctionComponent<BaseLayoutProps> = ({ children, token }) => {
-   
+
  
 
   return (
     <>
-    <h1>{token}</h1>
+  
       <NavBar />
-
+      <h1>{token}</h1>
+   
       <main>{children}</main>
     </>
   );
 };
 
 export default Layout;
+
+
+
 

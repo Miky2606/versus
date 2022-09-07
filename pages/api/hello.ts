@@ -23,7 +23,7 @@ export default async function handler(
 
         if (err) return catcher(err)
         
-        res.status(200).json({msg:decode})
+        res.status(200).json({msg:decode['id']})
         
 
 

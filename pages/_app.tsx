@@ -4,21 +4,22 @@ import "bootswatch/dist/morph/bootstrap.min.css";
 import "../styles/image.scss";
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import { useEffect } from "react";
-import { NextPageContext } from "next";
+import { Component, useEffect } from "react";
+import type { NextComponentType } from "next";
 import App from "next/app";
 import { ResponseApi } from "./api/interface/response";
 
-interface BaseMyApp {
-  req: NextRequest;
-}
 
-function MyApp({ Component, pageProps}: AppProps) {
+type TProps = Pick<AppProps, "Component" | "pageProps"> & {
+  token: string;
+};
+
+function MyApp({ Component, pageProps, token }: TProps) {
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap");
   }, []);
   return (
-    <Layout token>
+    <Layout token={token} >
       <Component {...pageProps} />
     </Layout>
   );
@@ -32,14 +33,28 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   const cookies = req?.headers.cookie?.split("=")[1];
 
   const { API_URL } = process.env;
+          
+  if (req?.headers.cookie !== undefined){
+
   const token = await axios.get<ResponseApi>(API_URL + "/hello", {
     headers: {
       token: cookies as string,
     },
   });
 
+
+  console.log(token.data.msg)
+
+
   return {
-    ...pageProps,
     token: token.data.msg,
+    ...pageProps,
+ 
   };
+}
+return {
+  token: '',
+  ...pageProps,
+
+};
 };

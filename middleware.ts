@@ -1,8 +1,7 @@
 
 
 import { NextRequest, NextResponse } from "next/server";
-import { ResponseApi } from "./pages/api/interface/response";
-import axios from "axios"
+
 
 
 export default function middleware(req:NextRequest, res:NextResponse){
@@ -31,10 +30,4 @@ export default function middleware(req:NextRequest, res:NextResponse){
 }
 
 
-const apiGetUser = (token:string)=>{
-    const {API_URL} = process.env
-    axios.get(API_URL+'/hello').then((res)=>{
-        console.log(res.data);
-        
-    })
-}
+
