@@ -1,74 +1,68 @@
 import { NextPage } from "next";
 import Link from "next/link";
-import { useState, useEffect, SetStateAction } from "react";
+import { useState } from "react";
 import { ResponseApi } from "./api/interface/response";
 import { User } from "./api/interface/userDB";
-import axios from "axios"
+import axios from "axios";
 import Loading from "./View/loading";
-import { getCookie, setCookie } from "cookies-next";
-import { redirect } from "next/dist/server/api-utils";
+import { setCookie } from "cookies-next";
 import Router, { useRouter } from "next/router";
 
 const Signin: NextPage = () => {
+  const [loading, setLoading] = useState<Boolean>(false);
+  const [response, setResponse] = useState<ResponseApi>();
+  const [user, setUser] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const [loading, setLoading] = useState<Boolean>(false)
- const [response, setResponse] = useState<ResponseApi>()
- const [user,setUser] = useState("")
- const [email,setEmail] = useState<string>("")
- const [password,setPassword] = useState<string>("")
+  const handleSubmit = (e: React.FormEvent) => e.preventDefault();
+  const handleUser = (e: any) => setUser(e.target.value);
+  const handleEmail = (e: any) => setEmail(e.target.value);
+  const handlePassword = (e: any) => setPassword(e.target.value);
+  const route = useRouter();
+  const { API_URL } = process.env;
 
- const handleSubmit = (e:React.FormEvent) => e.preventDefault()
- const handleUser = (e:any) => setUser(e.target.value)
- const handleEmail = (e:any) => setEmail(e.target.value)
- const handlePassword = (e:any) => setPassword(e.target.value)
- const route = useRouter()
-const {API_URL} = process.env
+  const userSend = () => {
+    const userData: User = {
+      username: user,
+      email: email,
+      password: password,
+      vs: [],
+      verfified: false,
+      os: window.navigator.userAgent,
+    };
 
- const userSend = () =>{
+    setLoading(true);
 
-   const userData: User ={
-    username: user,
-    email: email,
-    password: password,
-    vs:[],
-    verfified:false,
-    os: window.navigator.userAgent
-   }
+    axios.post<ResponseApi>(API_URL + "/hello", userData).then((res) => {
+      if (res) {
+        setResponse(res.data);
 
- 
-   
-   
-   setLoading(true)
-
-     axios.post<ResponseApi>( API_URL+'/hello', userData).then((res)=>{
-        
-    
-
-      if (res){
-        setResponse(res.data)
-        
-        if(response?.token !== ""){
-          setCookie('token', res.data.token)
-          Router.push({pathname:'/'})
+        if (response?.token !== "") {
+          setCookie("token", res.data.token);
+          Router.push({ pathname: "/" });
         }
-        
-      
 
-        setLoading(false)
+        setLoading(false);
       }
-
-     })
- }
-
-
+    });
+  };
 
   return (
     <>
-    { loading ? <Loading /> : <></>}
-    {response?.error === "Error"? <div className="alert alert-dismissible alert-danger">
-  <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
-  <strong>Error!</strong> {response.msg}
-</div> : <></>}
+      {loading ? <Loading /> : <></>}
+      {response?.error === "Error" ? (
+        <div className="alert alert-dismissible alert-danger">
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="alert"
+          ></button>
+          <strong>Error!</strong> {response.msg}
+        </div>
+      ) : (
+        <></>
+      )}
 
       <div className="container form">
         <div className="row">
@@ -82,14 +76,13 @@ const {API_URL} = process.env
                   <a>Login</a>
                 </Link>
               </legend>
-            
 
-              <div className="form-group" >
+              <div className="form-group">
                 <label htmlFor="exampleInputUser1" className="form-label mt-4">
                   Username
                 </label>
                 <input
-                onChange={handleUser}
+                  onChange={handleUser}
                   type="user"
                   className="form-control"
                   id="exampleInputUser1"
@@ -103,7 +96,7 @@ const {API_URL} = process.env
                   Email address
                 </label>
                 <input
-                 onChange={handleEmail}
+                  onChange={handleEmail}
                   type="email"
                   className="form-control"
                   id="exampleInputEmail1"
@@ -124,7 +117,7 @@ const {API_URL} = process.env
                   Password
                 </label>
                 <input
-                 onChange={handlePassword}
+                  onChange={handlePassword}
                   type="password"
                   className="form-control"
                   id="exampleInputPassword1"
@@ -135,7 +128,11 @@ const {API_URL} = process.env
 
               <br />
 
-              <button type="submit" onClick={userSend} className="btn btn-primary">
+              <button
+                type="submit"
+                onClick={userSend}
+                className="btn btn-primary"
+              >
                 Submit
               </button>
             </form>
