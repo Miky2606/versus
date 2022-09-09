@@ -1,92 +1,103 @@
-
 @mixin centerer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-   
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-  
-  a{
-    text-decoration-line: none;
-    color: red;
-  }
+a {
+  text-decoration-line: none;
+  color: red;
+}
 
+.navbar {
+  background: linear-gradient(
+    217deg,
+    rgba(255, 0, 0, 0.8),
+    rgba(92, 49, 172, 0) 70.71%
+  );
+  opacity: 0.8;
+}
 
-  .navbar{
-    background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(92, 49, 172, 0) 70.71%);
-    opacity: 0.8;
-  }
+.vs-card {
+  background: linear-gradient(
+      217deg,
+      rgba(26, 50, 190, 0.8),
+      rgba(25, 43, 207, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(238, 44, 9, 0.8), rgba(69, 21, 201, 0) 70.71%);
+  opacity: 0.8;
+  //box-shadow: 5px 5px 2px rgb(110, 107, 107);
+  filter: drop-shadow(10px 5px 5px rgba(87, 85, 85, 0.5));
+}
 
-  .vs-card{
-    background: linear-gradient(217deg, rgba(26, 50, 190, 0.8), rgba(25, 43, 207, 0) 70.71%),
-    linear-gradient(127deg, rgba(238, 44, 9, 0.8), rgba(69, 21, 201, 0) 70.71%),
-  ;
-    opacity: 0.8;
-    //box-shadow: 5px 5px 2px rgb(110, 107, 107);
-    filter: drop-shadow(10px 5px 5px rgba(87, 85, 85, 0.5));
+.loading {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+}
 
-  }
- 
-  .loading{
-    position: absolute;
-    top: 20%;
-    left: 50%;
-  }
- 
-  .pageOption {
-    height: 30vh;
-    width: 40vh;
-    position: relative;
-    left: 5%;
-    
-  }
+.pageOption {
+  height: 30vh;
+  width: 40vh;
+  position: relative;
+  left: 5%;
+}
 
- 
- 
-  .pageOption .photo {
-    position: absolute;
-    width: 40%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 5px;
-    background: url('/image1.jpg') center ;
-    clip-path: circle();
-    background-size:cover;
-    background-repeat: no-repeat;
-    filter: grayscale(1);
-   
+.pageOption .photo {
+  position: absolute;
+  width: 40%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  background: url("/image1.jpg") center;
+  clip-path: circle();
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: grayscale(1);
+}
 
-  }
-  
-  .pageOption .cinema {
-    position: absolute;
-    width: 40%;
-    top: 5px;
-    left: 50%;
-    right: 0;
-    bottom: 0;
-    background: url('/image2.jpg') center/cover ;
-    clip-path: circle();
-    filter: grayscale(1);
+.pageOption .cinema {
+  position: absolute;
+  width: 40%;
+  top: 5px;
+  left: 50%;
+  right: 0;
+  bottom: 0;
+  background: url("/image2.jpg") center/cover;
+  clip-path: circle();
+  filter: grayscale(1);
+}
 
-  
+.pageOption a:hover {
+  filter: grayscale(0);
+}
 
-  }
+.account {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  @include centerer();
+}
 
-  
+.account-image {
+  background: url("/image2.jpg") center/cover;
+  border: 1px;
+  border-radius: 50%;
+  border-style: dotted;
+  width: 12rem;
+  height: 12rem;
+  text-align: center;
+}
+.button-account {
+  top: 80%;
+}
 
-
-
-  .pageOption a:hover {
-    filter:grayscale(0);
-
-  }
-  
-
-  .form{
-    @include centerer();
-  }
- 
+.tab {
+  width: 22rem;
+  padding: 1%;
+}
+.form {
+  @include centerer();
+}

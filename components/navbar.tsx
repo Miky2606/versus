@@ -1,4 +1,19 @@
+import { useState, useEffect } from "react";
+import { getUserApi } from "../controller/sign-login";
+import { User } from "../pages/api/interface/userDB";
+
 const NavBar = (): JSX.Element => {
+  const [user, setUser] = useState<User>();
+  const [error, setError] = useState<string>("");
+
+  const { API_URL } = process.env;
+  const api = API_URL + "/hello";
+
+  useEffect(() => {
+    getUserApi(api)
+      .then((res) => setUser(res))
+      .catch((err) => setError(err.msg));
+  }, []);
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary ">
@@ -26,17 +41,29 @@ const NavBar = (): JSX.Element => {
                 </a>
               </li>
 
-              <li className="nav-item">
-                <a href="" className="nav-link">
-                  Sign In
-                </a>
-              </li>
+              {error !== "" ? (
+                <>
+                  <li className="nav-item">
+                    <a href="" className="nav-link">
+                      Sign In
+                    </a>
+                  </li>
 
-              <li className="nav-item">
-                <a href="" className="nav-link">
-                  Login
-                </a>
-              </li>
+                  <li className="nav-item">
+                    <a href="" className="nav-link">
+                      Login
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <a href="" className="nav-link">
+                      {user?.username}
+                    </a>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

@@ -1,11 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { connectDB } from './interface/db/db'
-import { ResponseFunc } from './interface/response'
+import { ResponseFunc, TokenPayload } from './interface/response'
 import user, { User } from './interface/userDB'
-import jwt, { Jwt, JwtPayload } from "jsonwebtoken"
-import { deleteCookie } from 'cookies-next'
-import { log } from 'console'
+import jwt, { VerifyErrors, VerifyOptions } from "jsonwebtoken"
+import jwtDecode from 'jwt-decode'
+
 
 const { SECRET_KEY } = process.env
 
@@ -22,25 +22,18 @@ export default async function handler(
     GET: async (req: NextApiRequest, res: NextApiResponse) => {
       const tokenGet = req.headers.token as string
 
-
-
       if (tokenGet === "") return res.status(401).json({ err: "Error", msg: "Token Not exist" })
 
-      jwt.verify(tokenGet, SECRET_KEY as string, (err, decode) => {
 
-        if (err) return catcher(err)
-        const id: string[] | "" = decode ? ['id'] : ""
-        user.findById(id, (err: Error, data: User) => {
-          if (err) {
+      const decode = jwtDecode<TokenPayload>(tokenGet)
+      console.log(decode);
 
-            res.status(401).json({ err: "Error", msg: "Token Doesnt Exist" })
+      user.findById(decode.id, (err: Error, data: User) => {
+        console.log(data);
+        if (err) return res.status(401).json({ err: "Error", msg: "User Not Exist" })
 
-          };
 
-          console.log(data)
-          return res.status(200).json({ msg: data })
-        })
-
+        return res.status(200).json({ msg: data })
       })
 
     },

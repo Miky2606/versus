@@ -1,4 +1,6 @@
 import axios from "axios";
+import { deleteCookie, getCookie } from "cookies-next";
+import { User } from "../pages/api/interface/userDB";
 
 
 
@@ -29,13 +31,16 @@ const Error = (error: ErrorAuth) => {
 
 
 
-export const getUserApi = (token: string, api: string) => {
+
+export const getUserApi = (api: string) => {
 
 
 
-    const p = new Promise((resolve, reject) => {
+    const p = new Promise((resolve: (value: User) => void, reject): any => {
+        const token = getCookie('token') ?? ""
 
-        if (token === undefined) reject(Error(ErrorAuth.ErrorTokenUndefined));
+
+        if (token === "") return reject({ msg: Error(ErrorAuth.ErrorToken) });
         return axios.get(api, {
             headers: {
                 'token': token
@@ -43,7 +48,13 @@ export const getUserApi = (token: string, api: string) => {
         })
             .then((res) => {
 
-                if (res.data.msg === 'Error') reject({ msg: Error(ErrorAuth.ErrorToken), error: res.data.error })
+                if (res.data.msg === 'Error') {
+                    deleteCookie('token')
+                    reject({ msg: Error(ErrorAuth.ErrorToken), error: res.data.error })
+
+                }
+
+
                 resolve(res.data.msg)
             }).catch(err => reject({ err: err }))
 

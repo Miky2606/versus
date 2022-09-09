@@ -40,7 +40,7 @@ const Signin: NextPage = () => {
 
         if (response?.token !== "") {
           setCookie("token", res.data.token);
-          Router.push({ pathname: "/" });
+          Router.reload();
         }
 
         setLoading(false);
